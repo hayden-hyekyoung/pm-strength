@@ -164,7 +164,17 @@ details.group .item{border-color:var(--line);background:var(--bg)}
 .book .meta{font-size:13px;color:var(--muted)}
 .book h3{font-size:17px;font-weight:700}
 .book .why{font-size:14px}
-.book .tag{font-size:12px;font-weight:700;color:var(--accent)}
+.book .tag{align-self:flex-start;font-size:12px;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--accent-fill);color:var(--on-accent)}
+.recbox{background:var(--navy);border-radius:18px;padding:22px 14px 14px;display:flex;flex-direction:column;gap:16px}
+.rechead{display:flex;flex-direction:column;gap:6px;padding:0 6px;color:var(--on-navy)}
+.rechead h3{font-size:21px;font-weight:700;color:var(--on-navy)}
+.rechead p{font-size:14px;color:rgba(255,255,255,.78)}
+.recbox .book{border:0;box-shadow:none}
+.recbox .book .cover,.recbox .book .cover img{width:96px}
+details.more{margin-top:8px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+details.more summary{padding:16px;font-weight:700;cursor:pointer;color:var(--muted)}
+details.more .books{padding:0 12px 12px}
+details.more .book{background:var(--bg)}
 .shops{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
 .shops a{font-size:13px;padding:6px 12px;border-radius:99px;border:1px solid var(--line);color:var(--ink);text-decoration:none}
 .shops a:hover{border-color:var(--accent)}
@@ -290,9 +300,7 @@ footer .wrap{padding-block:40px 56px;display:flex;flex-direction:column;gap:12px
   <div class="wrap">
     <div class="sec-no">STEP 3</div>
     <h2>내 PM 성향 맞춤 추천 도서</h2>
-    <p class="lead" id="bookLead">셀프 체크를 하면 내 성향에 맞는 책이 위로 올라와요. 공통 필독서는 항상 포함돼요.</p>
-    <div class="note">읽는 순서 추천: 내 성향 책 1권 → 공통 『인스파이어드』 → 두 번째로 높은 유형의 책 1권</div>
-    <div class="books" id="bookList"></div>
+    <div id="bookList"></div>
     <p class="small">구매처는 각 서점의 검색 결과로 연결돼요.</p>
     <div class="next">
       <p>추천 도서까지 확인했어요. 성향, 역량, 추천 책을 한 페이지에 정리해 드릴게요.</p>
@@ -327,9 +335,7 @@ footer .wrap{padding-block:40px 56px;display:flex;flex-direction:column;gap:12px
       <div class="rows" id="fSkillRows"></div>
       <a class="small" href="#skill">STEP 2 다시 보기</a>
     </div>
-    <h3 class="subhead">나에게 추천하는 책</h3>
-    <div class="books" id="fBookList"></div>
-    <div class="note">읽는 순서 추천: 내 성향 책 1권 → 공통 『인스파이어드』 → 두 번째로 높은 유형의 책 1권</div>
+    <div id="fBookList"></div>
 
     <div class="result">
       <h3 style="font-size:20px">성향과 경험이 다르게 나왔나요?</h3>
@@ -498,7 +504,7 @@ const skillRows=k=>gNames.map((g,i)=>{const p=k.cnt[i]/k.tot[i];const sg=stage(p
 const setBig=(el,txt,emptyTxt)=>{el.textContent=txt||emptyTxt;el.classList.toggle('empty',!txt)};
 const bookCard=(b,rec)=>`<article class="book ${rec?'rec':''}">
     ${b.cover?`<a class="cover" href="${esc(b.aladin)}" target="_blank" rel="noopener"><img src="${esc(b.cover)}" alt="${esc(b.title)} 표지" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></a>`:''}
-    <div class="binfo">${rec?'<span class="tag">내 성향 추천</span>':''}
+    <div class="binfo">${rec?`<span class="tag">${esc(rec)}</span>`:''}
     <span class="meta">${esc(b.type)} · ${esc(b.author)} · ${esc(b.pub)}</span><h3>${esc(b.title)}</h3><p class="why">${esc(b.why)}</p>
     <div class="shops"><a href="${esc(b.kyobo)}" target="_blank" rel="noopener">교보문고</a><a href="${esc(b.yes24)}" target="_blank" rel="noopener">예스24</a><a href="${esc(b.aladin)}" target="_blank" rel="noopener">알라딘</a></div></div></article>`;
 
@@ -543,14 +549,17 @@ function update(){
       cm.textContent=`성향과 경험이 같은 방향이에요. ${TYPES[t].k} 역량은 지금 '${sg}' 단계예요. `+(sg==='지원 가능'?'이 강점을 이력서와 면접 답변의 중심에 두세요.':'STEP 2에서 아직 체크하지 못한 항목이 다음에 쌓을 역량이에요.')}
     else cm.textContent=`성향은 ${label(s.top,'')}, 경험은 ${label(k.top,'')} 쪽이에요. 지금 하는 일과 내 강점이 다르면 열심히 해도 커리어가 쌓이는 느낌이 들지 않아요. 이 차이를 어떻게 좁힐지가 커리어 방향의 핵심이에요.`}
 
-  // 추천 도서: 성향 1위 유형 + 공통
+  // 추천 도서: 성향 1위 유형 책 → 공통 필독서 순서로 '헤이든 추천' 박스에, 나머지는 접어서
   const recTypes=s.top.map(i=>TYPES[i].k);
-  const isRec=b=>s.top.length>0&&(b.type==='공통'||recTypes.includes(b.type));
-  const sorted=[...BOOKS].sort((a,b)=>isRec(b)-isRec(a));
-  document.getElementById('bookLead').textContent=s.top.length?`${label(s.top,' 하이브리드형')}에 맞는 책과 공통 필독서를 맨 위에 모았어요.`:'셀프 체크를 하면 내 성향에 맞는 책이 위로 올라와요. 공통 필독서는 항상 포함돼요.';
-  $('bookList').innerHTML=sorted.map(b=>bookCard(b,isRec(b))).join('');
-  // 최종 결과: 추천 책만
-  $('fBookList').innerHTML=s.top.length?BOOKS.filter(isRec).map(b=>bookCard(b,true)).join(''):'<p class="note">STEP 1 성향 체크를 하면 나에게 맞는 책이 여기에 정리돼요.</p>';
+  const recList=s.top.length?[...BOOKS.filter(b=>recTypes.includes(b.type)),...BOOKS.filter(b=>b.type==='공통')]:[];
+  const others=BOOKS.filter(b=>!recList.includes(b));
+  const recBox=()=>!s.top.length?'<p class="note">STEP 1 성향 체크를 하면 나에게 맞는 책을 골라 드려요.</p>':
+    `<div class="recbox"><div class="rechead"><span class="eyebrow">멘토 헤이든의 추천</span>
+      <h3>${esc(selfLabel)}인 나에게 추천하는 책 ${recList.length}권</h3>
+      <p>위에서부터 순서대로 읽어 보세요. 내 성향 책으로 강점을 키우고, 마지막에 PM 공통 필독서로 기본기를 다져요.</p></div>
+      <div class="books">${recList.map((b,i)=>bookCard(b,`추천 ${i+1} · ${b.type==='공통'?'PM 공통 필독서':'내 성향 맞춤'}`)).join('')}</div></div>`;
+  $('bookList').innerHTML=recBox()+(others.length?`<details class="more" ${s.top.length?'':'open'}><summary>다른 유형의 책도 둘러보기 (${others.length}권)</summary><div class="books">${others.map(b=>bookCard(b,'')).join('')}</div></details>`:'');
+  $('fBookList').innerHTML=recBox();
 }
 update();
 
