@@ -244,6 +244,8 @@ details.group .item{background:var(--soft);border-color:transparent}
 .agree input:checked{background:var(--accent);border-color:var(--accent)}
 .agree input:checked::after{border-color:#fff}
 .back{color:var(--accent);font-weight:600}
+.tip{font-size:14px;color:var(--text);background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:10px;padding:12px 14px}
+.tip b{color:var(--accent)}
 </style>
 </head>
 <body>
@@ -299,6 +301,7 @@ details.group .item{background:var(--soft);border-color:transparent}
     <div class="sec-no">STEP 1</div>
     <h2>PM 성향 셀프 체크</h2>
     <p class="lead">나와 비슷한 문장을 모두 골라 주세요. 30문장이 5가지 PM 유형에 6개씩 섞여 있어요.</p>
+    <p class="tip"><b>많이 고를수록 결과가 정확해져요.</b> 1~2개만 골라도 유형은 나오지만, 조금이라도 나와 비슷하다면 빠짐없이 체크해 주세요.</p>
     <div class="list" id="qList"></div>
     <div class="next">
       <p id="sub1">문장을 하나 이상 고르면 제출할 수 있어요.</p>
@@ -330,6 +333,7 @@ details.group .item{background:var(--soft);border-color:transparent}
     <div class="sec-no">STEP 2</div>
     <h2>나의 경험은 어떤 PM으로 지원·성장하기 좋을까?</h2>
     <p class="lead">실제로 해 본 일에 체크하세요. 유형별로 펼쳐서 체크할 수 있어요.</p>
+    <p class="tip"><b>5개 유형을 모두 펼쳐서 체크할수록 결과가 자세해져요.</b> 일부만 해 본 일이라도 직접 해 봤다면 체크해 주세요.</p>
     <div class="list" id="cList"></div>
     <div class="next">
       <p id="sub2">경험한 일을 하나 이상 체크하면 제출할 수 있어요.</p>
@@ -580,10 +584,10 @@ function update(){
 
   // STEP 1
   setBig($('selfType'),selfLabel,'문장을 고르면 결과가 나와요');
-  $('selfNote').textContent=!s.top.length?'':s.top.length===1?'가장 많이 고른 유형이 주 성향이에요.':'1위가 동점이라 두 성향 이상을 함께 가진 하이브리드형이에요.';
+  $('selfNote').textContent=(!s.top.length?'':s.top.length===1?'가장 많이 고른 유형이 주 성향이에요.':'1위가 동점이라 두 성향 이상을 함께 가진 하이브리드형이에요.')+(s.top.length&&st.q.length<6?` 아직 ${st.q.length}개만 골라서 결과가 바뀔 수 있어요. 더 고를수록 정확해져요.`:'');
   $('selfRows').innerHTML=selfRows(s);
   $('go2').setAttribute('aria-disabled',s.top.length?'false':'true');
-  $('sub1').textContent=s.top.length?`${st.q.length}개를 골랐어요. 제출하면 내 성향 결과를 보여 드려요.`:'문장을 하나 이상 고르면 제출할 수 있어요.';
+  $('sub1').textContent=!s.top.length?'문장을 하나 이상 고르면 제출할 수 있어요.':st.q.length<6?`아직 ${st.q.length}개를 골랐어요. 더 고를수록 결과가 정확해져요. 다 골랐다면 제출해 주세요.`:`${st.q.length}개를 골랐어요. 제출하면 내 성향 결과를 보여 드려요.`;
   $('next1').textContent=s.top.length?`내 성향은 ${selfLabel}이에요. 이제 지금까지의 업무 경험이 어떤 유형에 가까운지 확인해 볼까요?`:'STEP 1 성향 체크를 먼저 해 주세요.';
 
   // STEP 2
@@ -591,7 +595,7 @@ function update(){
   $('skillRows').innerHTML=skillRows(k);
   gNames.forEach((_,i)=>$('gc'+i).textContent=`${k.cnt[i]}/${k.tot[i]}`);
   $('go3').setAttribute('aria-disabled',st.c.length?'false':'true');
-  $('sub2').textContent=st.c.length?`${st.c.length}개를 체크했어요. 제출하면 내 역량 결과를 보여 드려요.`:'경험한 일을 하나 이상 체크하면 제출할 수 있어요.';
+  $('sub2').textContent=!st.c.length?'경험한 일을 하나 이상 체크하면 제출할 수 있어요.':st.c.length<10?`아직 ${st.c.length}개를 체크했어요. 다른 유형도 펼쳐서 더 체크할수록 결과가 자세해져요. 다 체크했다면 제출해 주세요.`:`${st.c.length}개를 체크했어요. 제출하면 내 역량 결과를 보여 드려요.`;
   $('next2').textContent=k.top.length?`경험상 강점은 ${skillLabel}이에요. 이제 내 성향에 맞는 책을 보러 가요.`:st.c.length?'공통 역량만 체크했어요. 유형별 항목도 체크하면 강점 유형이 나와요. 지금 바로 추천 도서로 넘어가도 돼요.':'STEP 2 역량 체크를 먼저 해 주세요.';
 
   // FINAL
