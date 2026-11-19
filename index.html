@@ -275,8 +275,8 @@ details.group .item{background:var(--soft);border-color:transparent}
         <li>수집 항목: 이름, 이메일 주소, 커리어 고민, 질문 내용</li>
         <li>이용 목적: PM 강점 진단 제공, 질문 답변, 멘토링 안내</li>
         <li>보유 기간: 수집일로부터 1년 또는 삭제 요청 시까지</li>
-        <li>삭제 요청: mento_haydenmail@gmail.com</li></ul></details>
-      <label class="agree"><input type="checkbox" id="fAgree2" required><span><b>(필수)</b> 멘토 헤이든의 특별한 소식 및 인사이트를 가장 먼저 받아볼게요.</span></label>
+        <li>삭제 요청: mento.haydenmail@gmail.com</li></ul></details>
+      <label class="agree"><input type="checkbox" id="fAgree2"><span><b>(선택)</b> 멘토 헤이든의 특별한 소식 및 인사이트를 가장 먼저 받아볼게요.</span></label>
       <p class="err" id="leadErr" role="alert"></p>
       <button class="submit" id="leadBtn" type="submit">PM 강점 진단 시작하기</button>
     </form>
@@ -410,7 +410,7 @@ details.group .item{background:var(--soft);border-color:transparent}
       <h3 style="font-size:20px">성향과 경험이 다르게 나왔나요?</h3>
       <p class="lead">업무 성향과 경험에는 차이가 있을 수 있어요. 이 차이를 대화로 짚으며 방향을 잡아 가는 것이 커리어 멘토링입니다.</p>
       <div class="contact">
-        <code id="mail">mento_haydenmail@gmail.com</code>
+        <code id="mail">mento.haydenmail@gmail.com</code>
         <button class="btn" id="copyBtn" type="button">이메일 복사</button>
       </div>
     </div>
@@ -658,7 +658,7 @@ $('leadForm').addEventListener('submit',async e=>{
     agreePrivacy:$('fAgree1').checked,agreeNews:$('fAgree2').checked};
   const miss=[[!d.name,'fName','이름을 입력해 주세요.'],[!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email),'fEmail','이메일 주소를 정확히 입력해 주세요.'],
     [!d.concern,'fConcern','PM 커리어 고민을 입력해 주세요.'],[!d.question,'fQuestion','질문하고 싶은 내용을 입력해 주세요.'],
-    [!d.agreePrivacy,'fAgree1','개인정보 수집·이용에 동의해 주세요.'],[!d.agreeNews,'fAgree2','소식 받기에 동의해 주세요.']].find(m=>m[0]);
+    [!d.agreePrivacy,'fAgree1','개인정보 수집·이용에 동의해 주세요.']].find(m=>m[0]);
   if(miss){err.textContent=miss[2];$(miss[1]).focus();return}
   err.textContent='';btn.disabled=true;btn.textContent='저장 중...';
   try{
