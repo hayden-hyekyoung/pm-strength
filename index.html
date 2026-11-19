@@ -156,7 +156,10 @@ details.group .item{border-color:var(--line);background:var(--bg)}
 
 /* 도서 */
 .books{display:flex;flex-direction:column;gap:10px}
-.book{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.book{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;gap:14px;align-items:flex-start}
+.book .cover{flex:none;width:84px}
+.book .cover img{display:block;width:84px;height:auto;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.binfo{min-width:0;display:flex;flex-direction:column;gap:6px}
 .book.rec{border-color:var(--accent-fill);box-shadow:0 0 0 1px var(--accent-fill) inset}
 .book .meta{font-size:13px;color:var(--muted)}
 .book h3{font-size:17px;font-weight:700}
@@ -228,15 +231,27 @@ footer .wrap{padding-block:40px 56px;display:flex;flex-direction:column;gap:12px
     <h2>PM 성향 셀프 체크</h2>
     <p class="lead">나와 비슷한 문장을 모두 골라 주세요. 30문장이 5가지 PM 유형에 6개씩 섞여 있어요.</p>
     <div class="list" id="qList"></div>
+    <div class="next">
+      <p id="sub1">문장을 하나 이상 고르면 제출할 수 있어요.</p>
+      <a class="btn big" id="go2" href="#self-result" aria-disabled="true">제출하고 성향 결과 보기 →</a>
+    </div>
+  </div>
+</section>
+
+<section class="block" data-view="self-result" hidden>
+  <div class="wrap">
+    <div class="sec-no">STEP 1 결과</div>
+    <h2>나의 PM 성향 결과</h2>
     <div class="result" aria-live="polite">
       <div><div class="label">나의 PM 성향</div><div class="big empty" id="selfType">문장을 고르면 결과가 나와요</div></div>
       <p class="small" id="selfNote"></p>
       <div class="rows" id="selfRows"></div>
       <div class="legend">강도 기준: 유형별 4개 이상 뚜렷 · 2~3개 보통 · 0~1개 약함 (참고용)</div>
     </div>
+    <a class="back" href="#self">← 성향 체크 다시 하기</a>
     <div class="next">
-      <p id="next1">문장을 하나 이상 고르면 다음 단계로 넘어갈 수 있어요.</p>
-      <a class="btn big" id="go2" href="#skill" aria-disabled="true">STEP 2 역량 체크하러 가기 →</a>
+      <p id="next1">STEP 1 성향 체크를 먼저 해 주세요.</p>
+      <a class="btn big" href="#skill">STEP 2 역량 테스트 하러 가기 →</a>
     </div>
   </div>
 </section>
@@ -247,14 +262,26 @@ footer .wrap{padding-block:40px 56px;display:flex;flex-direction:column;gap:12px
     <h2>나의 경험은 어떤 PM으로 지원·성장하기 좋을까?</h2>
     <p class="lead">실제로 해 본 일에 체크하세요. 유형별로 펼쳐서 체크할 수 있어요.</p>
     <div class="list" id="cList"></div>
+    <div class="next">
+      <p id="sub2">경험한 일을 하나 이상 체크하면 제출할 수 있어요.</p>
+      <a class="btn big" id="go3" href="#skill-result" aria-disabled="true">제출하고 역량 결과 보기 →</a>
+    </div>
+  </div>
+</section>
+
+<section class="block" data-view="skill-result" hidden>
+  <div class="wrap">
+    <div class="sec-no">STEP 2 결과</div>
+    <h2>나의 PM 역량 결과</h2>
     <div class="result" aria-live="polite">
       <div><div class="label">역량상 강점 유형</div><div class="big empty" id="skillType">경험한 일을 체크하면 결과가 나와요</div></div>
       <div class="rows" id="skillRows"></div>
       <div class="legend">단계 기준: 달성률 70% 이상 지원 가능 · 40% 초과 성장 중 · 그 외 경험 쌓기</div>
     </div>
+    <a class="back" href="#skill">← 역량 체크 다시 하기</a>
     <div class="next">
-      <p id="next2">경험한 일을 하나 이상 체크하면 다음 단계로 넘어갈 수 있어요.</p>
-      <a class="btn big" id="go3" href="#books" aria-disabled="true">STEP 3 추천 도서 보러 가기 →</a>
+      <p id="next2">STEP 2 역량 체크를 먼저 해 주세요.</p>
+      <a class="btn big" href="#books">STEP 3 추천 도서 보러 가기 →</a>
     </div>
   </div>
 </section>
@@ -268,8 +295,8 @@ footer .wrap{padding-block:40px 56px;display:flex;flex-direction:column;gap:12px
     <div class="books" id="bookList"></div>
     <p class="small">구매처는 각 서점의 검색 결과로 연결돼요.</p>
     <div class="next">
-      <p>추천 도서까지 확인했어요. 이제 성향, 역량, 추천 책을 한 번에 정리해 드릴게요.</p>
-      <a class="btn big" href="#result">종합 결과 보기 →</a>
+      <p>추천 도서까지 확인했어요. 성향, 역량, 추천 책을 한 페이지에 정리해 드릴게요.</p>
+      <a class="btn big" href="#result">최종 결과 한 페이지로 보기 →</a>
     </div>
   </div>
 </section>
@@ -414,7 +441,7 @@ const C=[
 [5,'공통','지표 정의',"출시 전에 '무엇이 바뀌면 성공인가'를 숫자로 정해 두었다."],
 [5,'공통','회고와 학습','출시 후 결과를 처음 목표와 비교해 잘된 점·아쉬운 점을 정리했다.']
 ];
-const BOOKS=[{"type": "전략 PM", "title": "전략의 거장으로부터 배우는 좋은 전략 나쁜 전략", "author": "리처드 루멜트", "pub": "센시오", "why": "목표와 전략을 헷갈리지 않는 법. 비전·전략 프레임워크를 처음 세울 때", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EC%A2%8B%EC%9D%80%20%EC%A0%84%EB%9E%B5%20%EB%82%98%EC%81%9C%20%EC%A0%84%EB%9E%B5%20%EB%A3%A8%EB%A9%9C%ED%8A%B8", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EC%A2%8B%EC%9D%80%20%EC%A0%84%EB%9E%B5%20%EB%82%98%EC%81%9C%20%EC%A0%84%EB%9E%B5%20%EB%A3%A8%EB%A9%9C%ED%8A%B8", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EC%A2%8B%EC%9D%80%20%EC%A0%84%EB%9E%B5%20%EB%82%98%EC%81%9C%20%EC%A0%84%EB%9E%B5%20%EB%A3%A8%EB%A9%9C%ED%8A%B8"}, {"type": "전략 PM", "title": "제로 투 원", "author": "피터 틸", "pub": "한국경제신문", "why": "경쟁하지 않고 새 시장을 만드는 관점. '이게 정말 필요한가'를 묻는 연습", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EC%A0%9C%EB%A1%9C%20%ED%88%AC%20%EC%9B%90%20%ED%94%BC%ED%84%B0%20%ED%8B%B8", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EC%A0%9C%EB%A1%9C%20%ED%88%AC%20%EC%9B%90%20%ED%94%BC%ED%84%B0%20%ED%8B%B8", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EC%A0%9C%EB%A1%9C%20%ED%88%AC%20%EC%9B%90%20%ED%94%BC%ED%84%B0%20%ED%8B%B8"}, {"type": "사업 PM", "title": "비즈니스 모델의 탄생", "author": "알렉산더 오스터왈더, 예스 피그누어", "pub": "비즈니스북스", "why": "비즈니스 모델 캔버스로 BM과 매출 구조를 한 장에 정리", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EB%B9%84%EC%A6%88%EB%8B%88%EC%8A%A4%20%EB%AA%A8%EB%8D%B8%EC%9D%98%20%ED%83%84%EC%83%9D", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EB%B9%84%EC%A6%88%EB%8B%88%EC%8A%A4%20%EB%AA%A8%EB%8D%B8%EC%9D%98%20%ED%83%84%EC%83%9D", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EB%B9%84%EC%A6%88%EB%8B%88%EC%8A%A4%20%EB%AA%A8%EB%8D%B8%EC%9D%98%20%ED%83%84%EC%83%9D"}, {"type": "사업 PM", "title": "린 스타트업", "author": "에릭 리스", "pub": "인사이트", "why": "작게 출시해 시장 반응을 검증하는 MVP 방식의 기본서", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EB%A6%B0%20%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85%20%EC%97%90%EB%A6%AD%20%EB%A6%AC%EC%8A%A4", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EB%A6%B0%20%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85%20%EC%97%90%EB%A6%AD%20%EB%A6%AC%EC%8A%A4", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EB%A6%B0%20%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85%20%EC%97%90%EB%A6%AD%20%EB%A6%AC%EC%8A%A4"}, {"type": "사업 PM", "title": "어떻게 원하는 것을 얻는가", "author": "스튜어트 다이아몬드", "pub": "세계사", "why": "유관부서·파트너와의 협상과 조율에 바로 쓰는 협상법", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EC%96%B4%EB%96%BB%EA%B2%8C%20%EC%9B%90%ED%95%98%EB%8A%94%20%EA%B2%83%EC%9D%84%20%EC%96%BB%EB%8A%94%EA%B0%80", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EC%96%B4%EB%96%BB%EA%B2%8C%20%EC%9B%90%ED%95%98%EB%8A%94%20%EA%B2%83%EC%9D%84%20%EC%96%BB%EB%8A%94%EA%B0%80", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EC%96%B4%EB%96%BB%EA%B2%8C%20%EC%9B%90%ED%95%98%EB%8A%94%20%EA%B2%83%EC%9D%84%20%EC%96%BB%EB%8A%94%EA%B0%80"}, {"type": "그로스 PM", "title": "진화된 마케팅 그로스 해킹", "author": "션 엘리스, 모건 브라운", "pub": "골든어페어", "why": "실험 팀 구성과 가설·실험 반복 과정을 단계별로 설명", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EC%A7%84%ED%99%94%EB%90%9C%20%EB%A7%88%EC%BC%80%ED%8C%85%20%EA%B7%B8%EB%A1%9C%EC%8A%A4%20%ED%95%B4%ED%82%B9", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EC%A7%84%ED%99%94%EB%90%9C%20%EB%A7%88%EC%BC%80%ED%8C%85%20%EA%B7%B8%EB%A1%9C%EC%8A%A4%20%ED%95%B4%ED%82%B9", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EC%A7%84%ED%99%94%EB%90%9C%20%EB%A7%88%EC%BC%80%ED%8C%85%20%EA%B7%B8%EB%A1%9C%EC%8A%A4%20%ED%95%B4%ED%82%B9"}, {"type": "그로스 PM", "title": "린 분석", "author": "앨리스테어 크롤, 벤저민 요스코비츠", "pub": "한빛미디어", "why": "단계별 핵심 지표(OMTM) 고르기, 허상 지표 구분", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EB%A6%B0%20%EB%B6%84%EC%84%9D%20%EC%95%A8%EB%A6%AC%EC%8A%A4%ED%85%8C%EC%96%B4%20%ED%81%AC%EB%A1%A4", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EB%A6%B0%20%EB%B6%84%EC%84%9D%20%EC%95%A8%EB%A6%AC%EC%8A%A4%ED%85%8C%EC%96%B4%20%ED%81%AC%EB%A1%A4", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EB%A6%B0%20%EB%B6%84%EC%84%9D%20%EC%95%A8%EB%A6%AC%EC%8A%A4%ED%85%8C%EC%96%B4%20%ED%81%AC%EB%A1%A4"}, {"type": "그로스 PM", "title": "훅: 일상을 사로잡는 제품의 비밀", "author": "니르 이얄", "pub": "유엑스리뷰", "why": "사용자가 스스로 돌아오게 만드는 4단계 모델. 리텐션 개선용", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%ED%9B%85%20%EC%9D%BC%EC%83%81%EC%9D%84%20%EC%82%AC%EB%A1%9C%EC%9E%A1%EB%8A%94%20%EC%A0%9C%ED%92%88%EC%9D%98%20%EB%B9%84%EB%B0%80", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%ED%9B%85%20%EC%9D%BC%EC%83%81%EC%9D%84%20%EC%82%AC%EB%A1%9C%EC%9E%A1%EB%8A%94%20%EC%A0%9C%ED%92%88%EC%9D%98%20%EB%B9%84%EB%B0%80", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%ED%9B%85%20%EC%9D%BC%EC%83%81%EC%9D%84%20%EC%82%AC%EB%A1%9C%EC%9E%A1%EB%8A%94%20%EC%A0%9C%ED%92%88%EC%9D%98%20%EB%B9%84%EB%B0%80"}, {"type": "프로젝트 PM", "title": "맨먼스 미신", "author": "프레더릭 브룩스", "pub": "인사이트", "why": "'늦어진 프로젝트에 사람을 더 넣으면 더 늦어진다'는 고전. 일정·인력 계획의 기본", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EB%A7%A8%EB%A8%BC%EC%8A%A4%20%EB%AF%B8%EC%8B%A0", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EB%A7%A8%EB%A8%BC%EC%8A%A4%20%EB%AF%B8%EC%8B%A0", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EB%A7%A8%EB%A8%BC%EC%8A%A4%20%EB%AF%B8%EC%8B%A0"}, {"type": "프로젝트 PM", "title": "하이 아웃풋 매니지먼트", "author": "앤드루 그로브", "pub": "청림출판", "why": "인텔 CEO의 관리 실무서. 회의, 의사결정, 산출물 관리", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%ED%95%98%EC%9D%B4%20%EC%95%84%EC%9B%83%ED%92%8B%20%EB%A7%A4%EB%8B%88%EC%A7%80%EB%A8%BC%ED%8A%B8", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%ED%95%98%EC%9D%B4%20%EC%95%84%EC%9B%83%ED%92%8B%20%EB%A7%A4%EB%8B%88%EC%A7%80%EB%A8%BC%ED%8A%B8", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%ED%95%98%EC%9D%B4%20%EC%95%84%EC%9B%83%ED%92%8B%20%EB%A7%A4%EB%8B%88%EC%A7%80%EB%A8%BC%ED%8A%B8"}, {"type": "마케팅 PM", "title": "포지셔닝 (40주년 기념 스페셜 에디션)", "author": "알 리스, 잭 트라우트", "pub": "을유문화사", "why": "고객 머릿속에 제품 자리를 잡는 법. 포지셔닝·메시징의 고전", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%ED%8F%AC%EC%A7%80%EC%85%94%EB%8B%9D%20%EC%9E%AD%20%ED%8A%B8%EB%9D%BC%EC%9A%B0%ED%8A%B8", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%ED%8F%AC%EC%A7%80%EC%85%94%EB%8B%9D%20%EC%9E%AD%20%ED%8A%B8%EB%9D%BC%EC%9A%B0%ED%8A%B8", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%ED%8F%AC%EC%A7%80%EC%85%94%EB%8B%9D%20%EC%9E%AD%20%ED%8A%B8%EB%9D%BC%EC%9A%B0%ED%8A%B8"}, {"type": "마케팅 PM", "title": "마케팅 불변의 법칙", "author": "알 리스, 잭 트라우트", "pub": "비즈니스맵", "why": "포지셔닝, 차별화, 시장 진입 전략을 22가지 법칙으로 정리", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EB%A7%88%EC%BC%80%ED%8C%85%20%EB%B6%88%EB%B3%80%EC%9D%98%20%EB%B2%95%EC%B9%99", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EB%A7%88%EC%BC%80%ED%8C%85%20%EB%B6%88%EB%B3%80%EC%9D%98%20%EB%B2%95%EC%B9%99", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EB%A7%88%EC%BC%80%ED%8C%85%20%EB%B6%88%EB%B3%80%EC%9D%98%20%EB%B2%95%EC%B9%99"}, {"type": "공통", "title": "인스파이어드 (개정판)", "author": "마티 케이건", "pub": "제이펍", "why": "PM 필독서. 좋은 제품팀이 일하는 기준을 잡아 줌", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EC%9D%B8%EC%8A%A4%ED%8C%8C%EC%9D%B4%EC%96%B4%EB%93%9C%20%EB%A7%88%ED%8B%B0%20%EC%BC%80%EC%9D%B4%EA%B1%B4", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EC%9D%B8%EC%8A%A4%ED%8C%8C%EC%9D%B4%EC%96%B4%EB%93%9C%20%EB%A7%88%ED%8B%B0%20%EC%BC%80%EC%9D%B4%EA%B1%B4", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EC%9D%B8%EC%8A%A4%ED%8C%8C%EC%9D%B4%EC%96%B4%EB%93%9C%20%EB%A7%88%ED%8B%B0%20%EC%BC%80%EC%9D%B4%EA%B1%B4"}];
+const BOOKS=[{"type": "전략 PM", "title": "전략의 거장으로부터 배우는 좋은 전략 나쁜 전략", "author": "리처드 루멜트", "pub": "센시오", "why": "목표와 전략을 헷갈리지 않는 법. 비전·전략 프레임워크를 처음 세울 때", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EC%A2%8B%EC%9D%80%20%EC%A0%84%EB%9E%B5%20%EB%82%98%EC%81%9C%20%EC%A0%84%EB%9E%B5%20%EB%A3%A8%EB%A9%9C%ED%8A%B8", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EC%A2%8B%EC%9D%80%20%EC%A0%84%EB%9E%B5%20%EB%82%98%EC%81%9C%20%EC%A0%84%EB%9E%B5%20%EB%A3%A8%EB%A9%9C%ED%8A%B8", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EC%A2%8B%EC%9D%80%20%EC%A0%84%EB%9E%B5%20%EB%82%98%EC%81%9C%20%EC%A0%84%EB%9E%B5%20%EB%A3%A8%EB%A9%9C%ED%8A%B8", "cover": "https://image.aladin.co.kr/product/20229/25/cover200/k122635750_1.jpg"}, {"type": "전략 PM", "title": "제로 투 원", "author": "피터 틸", "pub": "한국경제신문", "why": "경쟁하지 않고 새 시장을 만드는 관점. '이게 정말 필요한가'를 묻는 연습", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EC%A0%9C%EB%A1%9C%20%ED%88%AC%20%EC%9B%90%20%ED%94%BC%ED%84%B0%20%ED%8B%B8", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EC%A0%9C%EB%A1%9C%20%ED%88%AC%20%EC%9B%90%20%ED%94%BC%ED%84%B0%20%ED%8B%B8", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EC%A0%9C%EB%A1%9C%20%ED%88%AC%20%EC%9B%90%20%ED%94%BC%ED%84%B0%20%ED%8B%B8", "cover": "https://image.aladin.co.kr/product/36235/91/cover200/k102038607_1.jpg"}, {"type": "사업 PM", "title": "비즈니스 모델의 탄생", "author": "알렉산더 오스터왈더, 예스 피그누어", "pub": "비즈니스북스", "why": "비즈니스 모델 캔버스로 BM과 매출 구조를 한 장에 정리", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EB%B9%84%EC%A6%88%EB%8B%88%EC%8A%A4%20%EB%AA%A8%EB%8D%B8%EC%9D%98%20%ED%83%84%EC%83%9D", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EB%B9%84%EC%A6%88%EB%8B%88%EC%8A%A4%20%EB%AA%A8%EB%8D%B8%EC%9D%98%20%ED%83%84%EC%83%9D", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EB%B9%84%EC%A6%88%EB%8B%88%EC%8A%A4%20%EB%AA%A8%EB%8D%B8%EC%9D%98%20%ED%83%84%EC%83%9D", "cover": "https://image.aladin.co.kr/product/27074/33/cover200/k412731580_1.jpg"}, {"type": "사업 PM", "title": "린 스타트업", "author": "에릭 리스", "pub": "인사이트", "why": "작게 출시해 시장 반응을 검증하는 MVP 방식의 기본서", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EB%A6%B0%20%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85%20%EC%97%90%EB%A6%AD%20%EB%A6%AC%EC%8A%A4", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EB%A6%B0%20%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85%20%EC%97%90%EB%A6%AD%20%EB%A6%AC%EC%8A%A4", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EB%A6%B0%20%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85%20%EC%97%90%EB%A6%AD%20%EB%A6%AC%EC%8A%A4", "cover": "https://image.aladin.co.kr/product/31786/36/cover200/k612833013_1.jpg"}, {"type": "사업 PM", "title": "어떻게 원하는 것을 얻는가", "author": "스튜어트 다이아몬드", "pub": "세계사", "why": "유관부서·파트너와의 협상과 조율에 바로 쓰는 협상법", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EC%96%B4%EB%96%BB%EA%B2%8C%20%EC%9B%90%ED%95%98%EB%8A%94%20%EA%B2%83%EC%9D%84%20%EC%96%BB%EB%8A%94%EA%B0%80", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EC%96%B4%EB%96%BB%EA%B2%8C%20%EC%9B%90%ED%95%98%EB%8A%94%20%EA%B2%83%EC%9D%84%20%EC%96%BB%EB%8A%94%EA%B0%80", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EC%96%B4%EB%96%BB%EA%B2%8C%20%EC%9B%90%ED%95%98%EB%8A%94%20%EA%B2%83%EC%9D%84%20%EC%96%BB%EB%8A%94%EA%B0%80", "cover": "https://image.aladin.co.kr/product/29617/81/cover200/s292838562_1.jpg"}, {"type": "그로스 PM", "title": "진화된 마케팅 그로스 해킹", "author": "션 엘리스, 모건 브라운", "pub": "골든어페어", "why": "실험 팀 구성과 가설·실험 반복 과정을 단계별로 설명", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EC%A7%84%ED%99%94%EB%90%9C%20%EB%A7%88%EC%BC%80%ED%8C%85%20%EA%B7%B8%EB%A1%9C%EC%8A%A4%20%ED%95%B4%ED%82%B9", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EC%A7%84%ED%99%94%EB%90%9C%20%EB%A7%88%EC%BC%80%ED%8C%85%20%EA%B7%B8%EB%A1%9C%EC%8A%A4%20%ED%95%B4%ED%82%B9", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EC%A7%84%ED%99%94%EB%90%9C%20%EB%A7%88%EC%BC%80%ED%8C%85%20%EA%B7%B8%EB%A1%9C%EC%8A%A4%20%ED%95%B4%ED%82%B9", "cover": "https://image.aladin.co.kr/product/11958/61/cover200/k522531432_2.jpg"}, {"type": "그로스 PM", "title": "린 분석", "author": "앨리스테어 크롤, 벤저민 요스코비츠", "pub": "한빛미디어", "why": "단계별 핵심 지표(OMTM) 고르기, 허상 지표 구분", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EB%A6%B0%20%EB%B6%84%EC%84%9D%20%EC%95%A8%EB%A6%AC%EC%8A%A4%ED%85%8C%EC%96%B4%20%ED%81%AC%EB%A1%A4", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EB%A6%B0%20%EB%B6%84%EC%84%9D%20%EC%95%A8%EB%A6%AC%EC%8A%A4%ED%85%8C%EC%96%B4%20%ED%81%AC%EB%A1%A4", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EB%A6%B0%20%EB%B6%84%EC%84%9D%20%EC%95%A8%EB%A6%AC%EC%8A%A4%ED%85%8C%EC%96%B4%20%ED%81%AC%EB%A1%A4", "cover": "https://image.aladin.co.kr/product/3446/54/cover200/8968480699_1.jpg"}, {"type": "그로스 PM", "title": "훅: 일상을 사로잡는 제품의 비밀", "author": "니르 이얄", "pub": "유엑스리뷰", "why": "사용자가 스스로 돌아오게 만드는 4단계 모델. 리텐션 개선용", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%ED%9B%85%20%EC%9D%BC%EC%83%81%EC%9D%84%20%EC%82%AC%EB%A1%9C%EC%9E%A1%EB%8A%94%20%EC%A0%9C%ED%92%88%EC%9D%98%20%EB%B9%84%EB%B0%80", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%ED%9B%85%20%EC%9D%BC%EC%83%81%EC%9D%84%20%EC%82%AC%EB%A1%9C%EC%9E%A1%EB%8A%94%20%EC%A0%9C%ED%92%88%EC%9D%98%20%EB%B9%84%EB%B0%80", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%ED%9B%85%20%EC%9D%BC%EC%83%81%EC%9D%84%20%EC%82%AC%EB%A1%9C%EC%9E%A1%EB%8A%94%20%EC%A0%9C%ED%92%88%EC%9D%98%20%EB%B9%84%EB%B0%80", "cover": "https://image.aladin.co.kr/product/29505/9/cover200/k702837146_1.jpg"}, {"type": "프로젝트 PM", "title": "맨먼스 미신", "author": "프레더릭 브룩스", "pub": "인사이트", "why": "'늦어진 프로젝트에 사람을 더 넣으면 더 늦어진다'는 고전. 일정·인력 계획의 기본", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EB%A7%A8%EB%A8%BC%EC%8A%A4%20%EB%AF%B8%EC%8B%A0", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EB%A7%A8%EB%A8%BC%EC%8A%A4%20%EB%AF%B8%EC%8B%A0", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EB%A7%A8%EB%A8%BC%EC%8A%A4%20%EB%AF%B8%EC%8B%A0", "cover": "https://image.aladin.co.kr/product/5412/44/cover200/8966261329_1.jpg"}, {"type": "프로젝트 PM", "title": "하이 아웃풋 매니지먼트", "author": "앤드루 그로브", "pub": "청림출판", "why": "인텔 CEO의 관리 실무서. 회의, 의사결정, 산출물 관리", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%ED%95%98%EC%9D%B4%20%EC%95%84%EC%9B%83%ED%92%8B%20%EB%A7%A4%EB%8B%88%EC%A7%80%EB%A8%BC%ED%8A%B8", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%ED%95%98%EC%9D%B4%20%EC%95%84%EC%9B%83%ED%92%8B%20%EB%A7%A4%EB%8B%88%EC%A7%80%EB%A8%BC%ED%8A%B8", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%ED%95%98%EC%9D%B4%20%EC%95%84%EC%9B%83%ED%92%8B%20%EB%A7%A4%EB%8B%88%EC%A7%80%EB%A8%BC%ED%8A%B8", "cover": "https://image.aladin.co.kr/product/14925/48/cover200/8935212180_1.jpg"}, {"type": "마케팅 PM", "title": "포지셔닝 (40주년 기념 스페셜 에디션)", "author": "알 리스, 잭 트라우트", "pub": "을유문화사", "why": "고객 머릿속에 제품 자리를 잡는 법. 포지셔닝·메시징의 고전", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%ED%8F%AC%EC%A7%80%EC%85%94%EB%8B%9D%20%EC%9E%AD%20%ED%8A%B8%EB%9D%BC%EC%9A%B0%ED%8A%B8", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%ED%8F%AC%EC%A7%80%EC%85%94%EB%8B%9D%20%EC%9E%AD%20%ED%8A%B8%EB%9D%BC%EC%9A%B0%ED%8A%B8", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%ED%8F%AC%EC%A7%80%EC%85%94%EB%8B%9D%20%EC%9E%AD%20%ED%8A%B8%EB%9D%BC%EC%9A%B0%ED%8A%B8", "cover": "https://image.aladin.co.kr/product/26785/89/cover200/8932474400_1.jpg"}, {"type": "마케팅 PM", "title": "마케팅 불변의 법칙", "author": "알 리스, 잭 트라우트", "pub": "비즈니스맵", "why": "포지셔닝, 차별화, 시장 진입 전략을 22가지 법칙으로 정리", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EB%A7%88%EC%BC%80%ED%8C%85%20%EB%B6%88%EB%B3%80%EC%9D%98%20%EB%B2%95%EC%B9%99", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EB%A7%88%EC%BC%80%ED%8C%85%20%EB%B6%88%EB%B3%80%EC%9D%98%20%EB%B2%95%EC%B9%99", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EB%A7%88%EC%BC%80%ED%8C%85%20%EB%B6%88%EB%B3%80%EC%9D%98%20%EB%B2%95%EC%B9%99", "cover": "https://image.aladin.co.kr/product/34997/20/cover200/8986022915_1.jpg"}, {"type": "공통", "title": "인스파이어드 (개정판)", "author": "마티 케이건", "pub": "제이펍", "why": "PM 필독서. 좋은 제품팀이 일하는 기준을 잡아 줌", "kyobo": "https://search.kyobobook.co.kr/search?keyword=%EC%9D%B8%EC%8A%A4%ED%8C%8C%EC%9D%B4%EC%96%B4%EB%93%9C%20%EB%A7%88%ED%8B%B0%20%EC%BC%80%EC%9D%B4%EA%B1%B4", "yes24": "https://www.yes24.com/Product/Search?domain=BOOK&query=%EC%9D%B8%EC%8A%A4%ED%8C%8C%EC%9D%B4%EC%96%B4%EB%93%9C%20%EB%A7%88%ED%8B%B0%20%EC%BC%80%EC%9D%B4%EA%B1%B4", "aladin": "https://www.aladin.co.kr/search/wsearch.aspx?SearchTarget=Book&SearchWord=%EC%9D%B8%EC%8A%A4%ED%8C%8C%EC%9D%B4%EC%96%B4%EB%93%9C%20%EB%A7%88%ED%8B%B0%20%EC%BC%80%EC%9D%B4%EA%B1%B4", "cover": "https://image.aladin.co.kr/product/17665/92/cover200/k122534513_2.jpg"}];
 
 // 유형별로 몰리지 않게 문장 순서를 섞어 보여줌 (1번 유형 1문장, 2번 유형 1문장 … 순)
 const qOrder=[];for(let i=0;i<6;i++)for(let t=0;t<5;t++)qOrder.push(t*6+i);
@@ -470,9 +497,10 @@ const skillRows=k=>gNames.map((g,i)=>{const p=k.cnt[i]/k.tot[i];const sg=stage(p
   return `<div class="row ${k.top.includes(i)?'top':''}"><span class="name">${g}</span><div class="track"><div class="fill" style="width:${p*100}%"></div></div><span class="val">${Math.round(p*100)}%<span class="pill ${stageCls(sg)}">${sg}</span></span></div>`}).join('');
 const setBig=(el,txt,emptyTxt)=>{el.textContent=txt||emptyTxt;el.classList.toggle('empty',!txt)};
 const bookCard=(b,rec)=>`<article class="book ${rec?'rec':''}">
-    ${rec?'<span class="tag">내 성향 추천</span>':''}
+    ${b.cover?`<a class="cover" href="${esc(b.aladin)}" target="_blank" rel="noopener"><img src="${esc(b.cover)}" alt="${esc(b.title)} 표지" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></a>`:''}
+    <div class="binfo">${rec?'<span class="tag">내 성향 추천</span>':''}
     <span class="meta">${esc(b.type)} · ${esc(b.author)} · ${esc(b.pub)}</span><h3>${esc(b.title)}</h3><p class="why">${esc(b.why)}</p>
-    <div class="shops"><a href="${esc(b.kyobo)}" target="_blank" rel="noopener">교보문고</a><a href="${esc(b.yes24)}" target="_blank" rel="noopener">예스24</a><a href="${esc(b.aladin)}" target="_blank" rel="noopener">알라딘</a></div></article>`;
+    <div class="shops"><a href="${esc(b.kyobo)}" target="_blank" rel="noopener">교보문고</a><a href="${esc(b.yes24)}" target="_blank" rel="noopener">예스24</a><a href="${esc(b.aladin)}" target="_blank" rel="noopener">알라딘</a></div></div></article>`;
 
 function update(){
   const s=selfResult(),k=skillResult();
@@ -490,14 +518,16 @@ function update(){
   $('selfNote').textContent=!s.top.length?'':s.top.length===1?'가장 많이 고른 유형이 주 성향이에요.':'1위가 동점이라 두 성향 이상을 함께 가진 하이브리드형이에요.';
   $('selfRows').innerHTML=selfRows(s);
   $('go2').setAttribute('aria-disabled',s.top.length?'false':'true');
-  $('next1').textContent=s.top.length?`내 성향은 ${selfLabel}이에요. 이제 지금까지의 경험이 어떤 유형에 가까운지 확인해 볼까요?`:'문장을 하나 이상 고르면 다음 단계로 넘어갈 수 있어요.';
+  $('sub1').textContent=s.top.length?`${st.q.length}개를 골랐어요. 제출하면 내 성향 결과를 보여 드려요.`:'문장을 하나 이상 고르면 제출할 수 있어요.';
+  $('next1').textContent=s.top.length?`내 성향은 ${selfLabel}이에요. 이제 지금까지의 업무 경험이 어떤 유형에 가까운지 확인해 볼까요?`:'STEP 1 성향 체크를 먼저 해 주세요.';
 
   // STEP 2
   setBig($('skillType'),skillLabel,'경험한 일을 체크하면 결과가 나와요');
   $('skillRows').innerHTML=skillRows(k);
   gNames.forEach((_,i)=>$('gc'+i).textContent=`${k.cnt[i]}/${k.tot[i]}`);
   $('go3').setAttribute('aria-disabled',st.c.length?'false':'true');
-  $('next2').textContent=k.top.length?`경험상 강점은 ${skillLabel}이에요. 내 성향에 맞는 책을 보러 가요.`:st.c.length?'공통 역량만 체크했어요. 유형별 항목도 체크하면 강점 유형이 나와요. 지금 바로 추천 도서로 넘어가도 돼요.':'경험한 일을 하나 이상 체크하면 다음 단계로 넘어갈 수 있어요.';
+  $('sub2').textContent=st.c.length?`${st.c.length}개를 체크했어요. 제출하면 내 역량 결과를 보여 드려요.`:'경험한 일을 하나 이상 체크하면 제출할 수 있어요.';
+  $('next2').textContent=k.top.length?`경험상 강점은 ${skillLabel}이에요. 이제 내 성향에 맞는 책을 보러 가요.`:st.c.length?'공통 역량만 체크했어요. 유형별 항목도 체크하면 강점 유형이 나와요. 지금 바로 추천 도서로 넘어가도 돼요.':'STEP 2 역량 체크를 먼저 해 주세요.';
 
   // FINAL
   setBig($('fSelfType'),selfLabel,'STEP 1을 아직 하지 않았어요');$('fSelfRows').innerHTML=selfRows(s);
@@ -526,7 +556,7 @@ update();
 
 // GNB 라우팅: 해시(#self, #skill, #books, #result)로 한 화면씩 보여줌
 // 리드 폼 제출 전에는 어떤 주소로 들어와도 폼만 보여줌. 결과(#result)는 GNB 없는 단독 페이지
-const VIEWS=['self','skill','books','result'];
+const VIEWS=['self','self-result','skill','skill-result','books','result'];
 const LEAD_KEY='pm-strength-lead-v1';
 let leadDone=false;try{leadDone=localStorage.getItem(LEAD_KEY)==='1'}catch(e){}
 function route(){
@@ -535,7 +565,8 @@ function route(){
   document.querySelectorAll('[data-view]').forEach(sec=>sec.hidden=sec.dataset.view!==v);
   document.querySelector('.hero').hidden=v!=='self';
   document.querySelector('.gnb').hidden=v==='lead'||v==='result';
-  document.querySelectorAll('[data-tab]').forEach(a=>a.dataset.tab===v?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'));
+  const tab=v.replace('-result','');
+  document.querySelectorAll('[data-tab]').forEach(a=>a.dataset.tab===tab?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'));
   window.scrollTo(0,0);
 }
 addEventListener('hashchange',route);route();
