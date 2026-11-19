@@ -12,24 +12,18 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
 /* 레이아웃: 한 줄 세로 흐름(모바일 우선) — 상단 진행 바 + 3단계 섹션 + 결과 비교 */
 :root{
-  --bg:#F2F4F8; --surface:#FFFFFF; --ink:#1C2333; --muted:#5B6478; --line:#DCE1EA;
-  --accent:#B87A0A; --accent-fill:#F5B942; --accent-soft:#FDF3DD; --on-accent:#1C2333;
-  --navy:#1C2333; --on-navy:#FFFFFF;
-  --f-body:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --bg:#FFFFFF; --surface:#FFFFFF; --soft:#F5F6F8; --ink:#0D1117; --text:#2B2F36; --muted:#5B6472; --line:#E8EAEE;
+  --accent:#2350E6; --accent-fill:#2350E6; --accent-soft:#EEF2FF; --on-accent:#FFFFFF;
+  --orange:#E2601C; --navy:#0B0F1E; --on-navy:#FFFFFF; --sky:#9DB4FF;
+  --f-body:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',system-ui,sans-serif;
+  --f-label:'Bebas Neue','Pretendard Variable',Pretendard,sans-serif;
+  color-scheme:light;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#121826; --surface:#1C2333; --ink:#EEF1F6; --muted:#A3ABBD; --line:#2E3850;
-  --accent:#F5B942; --accent-fill:#F5B942; --accent-soft:#2D2A20; --on-accent:#1C2333;
-  --navy:#0C111C; --on-navy:#EEF1F6; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#121826; --surface:#1C2333; --ink:#EEF1F6; --muted:#A3ABBD; --line:#2E3850;
-  --accent:#F5B942; --accent-fill:#F5B942; --accent-soft:#2D2A20; --on-accent:#1C2333;
-  --navy:#0C111C; --on-navy:#EEF1F6; color-scheme:dark}
-
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.65;-webkit-text-size-adjust:100%}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--navy)}
@@ -187,6 +181,65 @@ footer .wrap{padding-block:40px 56px;display:flex;flex-direction:column;gap:12px
 .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--muted);font-weight:500}
 .small{font-size:13px;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ===== 톤앤매너: 하이아웃풋클럽 참고 (다크 히어로 + 블루/오렌지 포인트 + 오렌지 알약 버튼) ===== */
+body{color:var(--text);letter-spacing:-.01em}
+::selection{background:#FFE58A}
+h1,h2,h3{color:var(--ink);letter-spacing:-.025em}
+.glow{background:radial-gradient(60% 50% at 0% 10%,rgba(226,96,28,.38),transparent 70%),radial-gradient(55% 55% at 100% 30%,rgba(35,80,230,.42),transparent 70%),var(--navy)}
+.hero{background:radial-gradient(70% 55% at 0% 0%,rgba(226,96,28,.45),transparent 70%),radial-gradient(60% 60% at 100% 35%,rgba(35,80,230,.5),transparent 70%),#07090F;text-align:center}
+.hero .wrap{padding-block:56px 48px;align-items:center;gap:16px}
+.eyebrow{font-family:var(--f-label);font-weight:400;font-size:15px;letter-spacing:.14em;color:#5B7CFF}
+.hero h1{color:#fff;font-size:clamp(40px,11vw,60px);font-weight:800;line-height:1.12}
+.hero-sub{color:#fff!important;font-size:21px;font-weight:700;line-height:1.45}
+.hero-sub em{font-style:normal}.hero-sub .o{color:#FF8A3D}.hero-sub .b{color:#5B7CFF}
+.hero p{color:rgba(255,255,255,.72);font-size:15px}
+.sec-no{font-family:var(--f-label);font-weight:400;font-size:17px;letter-spacing:.12em;color:var(--accent)}
+section h2{font-size:26px;font-weight:800}
+.lead{color:var(--muted)}
+/* GNB: 알약형 탭 */
+.gnb{border-bottom:1px solid var(--line);background:rgba(255,255,255,.96);backdrop-filter:blur(8px)}
+.gnb .wrap{padding-block:8px}
+.gnb a{border-radius:99px;padding:7px 4px;color:var(--muted)}
+.gnb a b{font-family:var(--f-label);font-weight:400;font-size:14px;letter-spacing:.08em}
+.gnb a[aria-current="page"]{background:var(--ink);color:#fff}
+.gnb a[aria-current="page"] b,.gnb a.done small{color:var(--sky)}
+.gnb a.done:not([aria-current]) small{color:var(--accent)}
+/* 카드·체크 */
+.item{border-radius:14px}
+.item input{border-radius:6px}
+.item input:checked::after{border-color:#fff}
+details.group,.result,.book{border-radius:18px}
+details.group .item{background:var(--soft);border-color:transparent}
+.result{box-shadow:0 1px 2px rgba(13,17,23,.04)}
+.result .big{font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.row.top .fill{background:linear-gradient(90deg,var(--orange),var(--accent))}
+.pill.mid{border-color:var(--orange);color:var(--orange)}
+.note{background:var(--soft);color:var(--muted)}
+/* 다음 단계 + 오렌지 알약 CTA */
+.next{background:var(--soft);border:0;border-radius:20px;padding:22px 20px}
+.next p{color:var(--text)}
+.btn.big,.submit{background:var(--orange);color:#fff;border:0;border-radius:99px;font-weight:700;box-shadow:0 8px 24px rgba(226,96,28,.32)}
+.btn.big:active,.submit:active{transform:translateY(1px)}
+.btn{border-radius:99px}
+.btn.ghost{border-radius:99px}
+/* 다크 카드: 비교·추천 박스 */
+.compare,.recbox{background:radial-gradient(60% 50% at 0% 0%,rgba(226,96,28,.35),transparent 70%),radial-gradient(55% 60% at 100% 20%,rgba(35,80,230,.45),transparent 70%),var(--navy);border-radius:22px}
+.compare h3,.rechead h3{color:#fff}
+.compare .pair div{background:rgba(255,255,255,.04)}
+.compare .pair strong{color:#fff;font-weight:800}
+.rechead .eyebrow,.compare .eyebrow{color:var(--sky)}
+.book .tag{background:var(--accent);color:#fff}
+.book.rec{border-color:var(--line);box-shadow:none}
+.recbox .book{border-radius:16px}
+/* 리드 폼 */
+.lead-card{border-radius:24px;box-shadow:0 10px 40px rgba(13,17,23,.06)}
+.lead-head h1{font-weight:800;color:var(--ink)}
+.field input,.field textarea{background:var(--soft);border-color:transparent;border-radius:12px}
+.field input:focus,.field textarea:focus{background:#fff;border-color:var(--accent)}
+.agree input:checked{background:var(--accent);border-color:var(--accent)}
+.agree input:checked::after{border-color:#fff}
+.back{color:var(--accent);font-weight:600}
 </style>
 </head>
 <body>
@@ -220,8 +273,9 @@ footer .wrap{padding-block:40px 56px;display:flex;flex-direction:column;gap:12px
 
 <header class="hero">
   <div class="wrap">
-    <div class="eyebrow">멘토 헤이든 · 무료 워크북</div>
-    <h1>PM 강점 진단 워크북</h1>
+    <div class="eyebrow">MENTOR HAYDEN | PM STRENGTH TEST</div>
+    <h1>PM 강점<br>진단 워크북</h1>
+    <p class="hero-sub">답은 <em class="o">성향</em>에 있고,<br><em class="b">강점</em>은 경험으로 증명됩니다</p>
     <p>내 PM 성향과 지금까지의 업무 경험을 체크하고, 보완이 필요한 역량을 찾아 보세요. 성향 체크 → 역량 체크 → 추천 도서 순서로 진행하면, 마지막에 종합 결과를 보여 드려요.</p>
   </div>
 </header>
@@ -318,7 +372,7 @@ footer .wrap{padding-block:40px 56px;display:flex;flex-direction:column;gap:12px
       <p class="lead" id="finalLead">성향 체크와 역량 체크 결과를 한 번에 모았어요.</p>
     </div>
     <div class="compare" aria-live="polite">
-      <div class="label" style="color:rgba(255,255,255,.65);font-size:13px">성향과 경험 비교</div>
+      <div class="eyebrow">MY PM FIT · 성향과 경험 비교</div>
       <div class="pair">
         <div><small>성향</small><strong id="cmpSelf">-</strong></div>
         <div><small>경험</small><strong id="cmpSkill">-</strong></div>
@@ -554,7 +608,7 @@ function update(){
   const recList=s.top.length?[...BOOKS.filter(b=>recTypes.includes(b.type)),...BOOKS.filter(b=>b.type==='공통')]:[];
   const others=BOOKS.filter(b=>!recList.includes(b));
   const recBox=()=>!s.top.length?'<p class="note">STEP 1 성향 체크를 하면 나에게 맞는 책을 골라 드려요.</p>':
-    `<div class="recbox"><div class="rechead"><span class="eyebrow">멘토 헤이든의 추천</span>
+    `<div class="recbox"><div class="rechead"><span class="eyebrow">HAYDEN'S PICK · 멘토 헤이든의 추천</span>
       <h3>${esc(selfLabel)}인 나에게 추천하는 책 ${recList.length}권</h3>
       <p>위에서부터 순서대로 읽어 보세요. 내 성향 책으로 강점을 키우고, 마지막에 PM 공통 필독서로 기본기를 다져요.</p></div>
       <div class="books">${recList.map((b,i)=>bookCard(b,`추천 ${i+1} · ${b.type==='공통'?'PM 공통 필독서':'내 성향 맞춤'}`)).join('')}</div></div>`;
