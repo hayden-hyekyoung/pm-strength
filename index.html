@@ -187,13 +187,23 @@ body{color:var(--text);letter-spacing:-.01em}
 ::selection{background:#FFE58A}
 h1,h2,h3{color:var(--ink);letter-spacing:-.025em}
 .glow{background:radial-gradient(60% 50% at 0% 10%,rgba(226,96,28,.38),transparent 70%),radial-gradient(55% 55% at 100% 30%,rgba(35,80,230,.42),transparent 70%),var(--navy)}
-.hero{background:radial-gradient(70% 55% at 0% 0%,rgba(226,96,28,.45),transparent 70%),radial-gradient(60% 60% at 100% 35%,rgba(35,80,230,.5),transparent 70%),#07090F;text-align:center}
-.hero .wrap{padding-block:56px 48px;align-items:center;gap:16px}
+.hero{position:relative;overflow:hidden;text-align:left;background:
+  radial-gradient(80% 60% at 110% 110%,rgba(35,80,230,.55),transparent 65%),
+  linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px) 0 0/28px 28px,
+  linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px) 0 0/28px 28px,
+  #0B0F1E}
+.hero .wrap{padding-block:48px 40px;align-items:flex-start;gap:16px}
 .eyebrow{font-family:var(--f-label);font-weight:400;font-size:15px;letter-spacing:.14em;color:#5B7CFF}
-.hero h1{color:#fff;font-size:clamp(40px,11vw,60px);font-weight:800;line-height:1.12}
-.hero-sub{color:#fff!important;font-size:21px;font-weight:700;line-height:1.45}
-.hero-sub em{font-style:normal}.hero-sub .o{color:#FF8A3D}.hero-sub .b{color:#5B7CFF}
-.hero p{color:rgba(255,255,255,.72);font-size:15px}
+.hero h1{color:#fff;font-size:clamp(44px,12.5vw,64px);font-weight:800;line-height:1.08}
+.hero-title{font-size:19px;font-weight:700;color:#fff!important}
+.hero-title span{background:linear-gradient(transparent 62%,rgba(226,96,28,.85) 62%);padding:0 2px}
+.types{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.types li{font-size:13px;font-weight:600;color:#fff;padding:5px 12px;border-radius:99px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.04)}
+.hero p{color:rgba(255,255,255,.72);font-size:15px;max-width:32em}
+.flow{list-style:none;margin:8px 0 0;padding:0;width:100%;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.14)}
+.flow li{padding:12px 0 0;color:#fff;font-size:14px;font-weight:600;display:flex;flex-direction:column;gap:2px}
+.flow li+li{padding-left:12px;border-left:1px solid rgba(255,255,255,.14)}
+.flow b{font-family:var(--f-label);font-weight:400;font-size:26px;line-height:1;color:var(--orange)}
 .sec-no{font-family:var(--f-label);font-weight:400;font-size:17px;letter-spacing:.12em;color:var(--accent)}
 section h2{font-size:26px;font-weight:800}
 .lead{color:var(--muted)}
@@ -224,7 +234,7 @@ details.group .item{background:var(--soft);border-color:transparent}
 .btn{border-radius:99px}
 .btn.ghost{border-radius:99px}
 /* 다크 카드: 비교·추천 박스 */
-.compare,.recbox{background:radial-gradient(60% 50% at 0% 0%,rgba(226,96,28,.35),transparent 70%),radial-gradient(55% 60% at 100% 20%,rgba(35,80,230,.45),transparent 70%),var(--navy);border-radius:22px}
+.compare,.recbox{background:radial-gradient(80% 70% at 110% 0%,rgba(35,80,230,.5),transparent 65%),linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px) 0 0/24px 24px,var(--navy);border-radius:22px}
 .compare h3,.rechead h3{color:#fff}
 .compare .pair div{background:rgba(255,255,255,.04)}
 .compare .pair strong{color:#fff;font-weight:800}
@@ -273,10 +283,12 @@ details.group .item{background:var(--soft);border-color:transparent}
 
 <header class="hero">
   <div class="wrap">
-    <div class="eyebrow">MENTOR HAYDEN | PM STRENGTH TEST</div>
-    <h1>PM 강점<br>진단 워크북</h1>
-    <p class="hero-sub">답은 <em class="o">성향</em>에 있고,<br><em class="b">강점</em>은 경험으로 증명됩니다</p>
-    <p>내 PM 성향과 지금까지의 업무 경험을 체크하고, 보완이 필요한 역량을 찾아 보세요. 성향 체크 → 역량 체크 → 추천 도서 순서로 진행하면, 마지막에 종합 결과를 보여 드려요.</p>
+    <div class="eyebrow">FREE WORKBOOK · 3 STEPS · 5 TYPES</div>
+    <h1>나는 어떤<br>PM일까?</h1>
+    <p class="hero-title"><span>PM 강점 진단 워크북</span></p>
+    <ul class="types" aria-label="PM 유형 5가지"><li>전략 PM</li><li>사업 PM</li><li>그로스 PM</li><li>프로젝트 PM</li><li>마케팅 PM</li></ul>
+    <p>내 성향과 지금까지의 업무 경험을 체크하면, 나에게 맞는 PM 유형과 다음에 쌓을 역량, 읽을 책까지 정리해 드려요.</p>
+    <ol class="flow"><li><b>01</b>성향 체크</li><li><b>02</b>역량 체크</li><li><b>03</b>추천 도서</li></ol>
   </div>
 </header>
 
