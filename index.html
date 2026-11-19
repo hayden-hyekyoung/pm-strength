@@ -183,7 +183,8 @@ footer .wrap{padding-block:40px 56px;display:flex;flex-direction:column;gap:12px
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
 /* ===== 톤앤매너: 하이아웃풋클럽 참고 (다크 히어로 + 블루/오렌지 포인트 + 오렌지 알약 버튼) ===== */
-body{color:var(--text);letter-spacing:-.01em}
+body{color:var(--text);letter-spacing:-.01em;word-break:keep-all;overflow-wrap:break-word}
+.hero p{text-wrap:balance}
 ::selection{background:#FFE58A}
 h1,h2,h3{color:var(--ink);letter-spacing:-.025em}
 .glow{background:radial-gradient(60% 50% at 0% 10%,rgba(15,92,69,.38),transparent 70%),radial-gradient(55% 55% at 100% 30%,rgba(35,80,230,.42),transparent 70%),var(--navy)}
