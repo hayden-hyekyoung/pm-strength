@@ -651,7 +651,7 @@ addEventListener('hashchange',route);route();
 
 // 리드 폼 → 구글 시트(Apps Script 웹 앱)
 const SHEET_ENDPOINT='https://script.google.com/macros/s/AKfycbzgO7e6K0Z_G7091LQX_ViMjfHK2duus9MWxJRsM2H0HN1c0eXd0noMOqaKJ5ccYqhDgw/exec';
-$('leadForm').addEventListener('submit',async e=>{
+$('leadForm').addEventListener('submit',e=>{
   e.preventDefault();
   const err=$('leadErr'),btn=$('leadBtn');
   const d={name:$('fName').value.trim(),email:$('fEmail').value.trim(),concern:$('fConcern').value.trim(),question:$('fQuestion').value.trim(),
@@ -660,11 +660,9 @@ $('leadForm').addEventListener('submit',async e=>{
     [!d.concern,'fConcern','PM 커리어 고민을 입력해 주세요.'],[!d.question,'fQuestion','질문하고 싶은 내용을 입력해 주세요.'],
     [!d.agreePrivacy,'fAgree1','개인정보 수집·이용에 동의해 주세요.']].find(m=>m[0]);
   if(miss){err.textContent=miss[2];$(miss[1]).focus();return}
-  err.textContent='';btn.disabled=true;btn.textContent='저장 중...';
-  try{
-    // Apps Script는 CORS 응답을 주지 않아 no-cors로 전송(응답 확인 불가)
-    if(SHEET_ENDPOINT.startsWith('https://'))await fetch(SHEET_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(d)});
-  }catch(x){err.textContent='전송에 실패했어요. 잠시 후 다시 시도해 주세요.';btn.disabled=false;btn.textContent='PM 강점 진단 시작하기';return}
+  err.textContent='';
+  // 저장 완료를 기다리지 않고 바로 진단으로 이동 (no-cors라 응답 확인 불가, keepalive로 전송 보장)
+  if(SHEET_ENDPOINT.startsWith('https://'))fetch(SHEET_ENDPOINT,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(d)}).catch(()=>{});
   leadDone=true;try{localStorage.setItem(LEAD_KEY,'1')}catch(x){}
   location.hash='self';route();
 });
