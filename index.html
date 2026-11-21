@@ -263,25 +263,19 @@ details.group .item{background:var(--soft);border-color:transparent}
 .tdesc mark{color:inherit;background:linear-gradient(transparent 58%,#FFE58A 58%,#FFE58A 92%,transparent 92%);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 2px}
 .intro{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px}
 /* 멘토링 안내 박스: 다른 카드와 구분되는 웜 옐로 */
-/* 멘토링 카드: 다크 그레인 + 오렌지 아크 상단, 로열 블루 CTA 하단 */
-.mcard{display:block;margin-top:14px;border-radius:20px;overflow:hidden;text-decoration:none;color:#fff;border:1px solid #232A44;box-shadow:0 14px 34px rgba(11,15,30,.28)}
-.mc-top{position:relative;padding:26px 22px 28px;display:flex;flex-direction:column;gap:10px;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E"),
-   radial-gradient(circle at 115% 50%,transparent 0 44%,rgba(235,160,90,.55) 46%,rgba(200,140,90,.18) 52%,transparent 62%),
-   radial-gradient(60% 70% at 100% 40%,rgba(150,150,160,.35),transparent 70%),
-   #0A0A0D}
-.mc-pill{align-self:flex-end;font-family:var(--f-label);font-size:14px;letter-spacing:.12em;color:#fff;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);border-radius:99px;padding:5px 14px;margin-bottom:6px}
-.mc-chips{display:flex;gap:6px;flex-wrap:wrap}
-.mc-chips span{font-family:var(--f-label);font-size:15px;letter-spacing:.03em;background:#F4F4F4;color:#111;padding:2px 8px;line-height:1.3}
-.mc-top h3{font-size:36px;font-weight:900;line-height:1.15;letter-spacing:-.03em;color:#fff;margin:2px 0 4px}
+/* 멘토링 카드: 블랙 그라데이션 + 흰 버튼 영역(로열 블루 글자) */
+.mcard{display:block;margin-top:14px;border-radius:20px;overflow:hidden;text-decoration:none;color:#fff;border:1px solid #DDE3F0;box-shadow:0 14px 34px rgba(11,15,30,.25)}
+.mc-top{padding:28px 22px 30px;display:flex;flex-direction:column;gap:10px;background:linear-gradient(160deg,#2A2E3A 0%,#12141B 45%,#000 100%)}
+.mc-eyebrow{font-family:var(--f-label);font-size:15px;letter-spacing:.12em;color:#9DB4FF}
+.mc-top h3{font-size:36px;font-weight:900;line-height:1.2;letter-spacing:-.03em;color:#fff;margin:2px 0 4px}
 .mc-top h3 u{text-decoration:none;border-bottom:3px solid #fff;padding-bottom:2px}
 .mc-top p{font-size:15px;line-height:1.65;color:#fff}
-.mc-top .mc-sub{font-size:16px;margin-top:4px}
-.mc-top p b{font-weight:800}
-.mc-cta{background:linear-gradient(120deg,#2350E6,#3A63F0);padding:20px 22px;font-size:18px;font-weight:700;color:#fff}
-.mcard:hover .mc-cta{filter:brightness(1.08)}
+.mc-top .mc-sub{font-size:16px;margin-top:4px;color:rgba(255,255,255,.85)}
+.mc-cta{background:#fff;padding:20px 22px;font-size:18px;font-weight:800;color:#2350E6}
+.mcard:hover .mc-cta{background:#F3F6FF}
 .btn.big{box-shadow:0 4px 14px rgba(35,80,230,.25)}
 .next p{text-align:center}
+.gnb a.locked{opacity:.4}
 </style>
 </head>
 <body>
@@ -320,7 +314,7 @@ details.group .item{background:var(--soft);border-color:transparent}
     <p class="tip"><b>많이 고를수록 결과가 정확해져요.</b> 1~2개만 골라도 유형은 나오지만, 조금이라도 나와 비슷하다면 빠짐없이 체크해 주세요.</p>
     <div class="list" id="qList"></div>
     <div class="next">
-      <p id="sub1">문장을 하나 이상 고르면 결과를 볼 수 있어요.</p>
+      <p id="sub1">최소 3개 이상 선택해야 결과를 볼 수 있어요. (현재 0개)</p>
       <a class="btn big" id="go2" href="#self-result" aria-disabled="true">결과 보기 →</a>
     </div>
   </div>
@@ -355,7 +349,7 @@ details.group .item{background:var(--soft);border-color:transparent}
     <p class="tip"><b>5개 유형을 모두 펼쳐서 체크할수록 결과가 자세해져요.</b> 일부만 해 본 일이라도 직접 해 봤다면 체크해 주세요.</p>
     <div class="list" id="cList"></div>
     <div class="next">
-      <p id="sub2">경험한 일을 하나 이상 체크하면 결과를 볼 수 있어요.</p>
+      <p id="sub2">최소 3개 이상 선택해야 결과를 볼 수 있어요. (현재 0개)</p>
       <a class="btn big" id="go3" href="#skill-result" aria-disabled="true">결과 보기 →</a>
     </div>
   </div>
@@ -399,8 +393,7 @@ details.group .item{background:var(--soft);border-color:transparent}
     </div>
     <a class="mcard" href="https://docurise.io/mentor-hayden/d/pm-fjo7meaj" target="_blank" rel="noopener">
       <div class="mc-top">
-        <span class="mc-pill">1:1 MENTORING</span>
-        <div class="mc-chips"><span>MENTOR HAYDEN</span><span>CAREER MENTORING</span></div>
+        <div class="mc-eyebrow">MENTOR HAYDEN · 1:1 MENTORING</div>
         <h3>회사에 적중하는<br><u>강점발견 멘토링</u></h3>
         <p class="mc-sub">PM 방향성, 상향 이직을 위한 이력서 작성과 강점 설계법</p>
       </div>
@@ -626,6 +619,9 @@ const DESC=[
 ];
 const typeDesc=top=>top.map(i=>`<p>${top.length>1?`<b>${TYPES[i].k}</b> · `:''}<mark>${DESC[i]}</mark></p>`).join('');
 
+// 최소 선택 개수: 미달이면 결과·다음 단계로 이동 불가
+const MIN=3;const okQ=()=>st.q.length>=MIN,okC=()=>st.c.length>=MIN;
+
 function update(){
   const s=selfResult(),k=skillResult();
   const selfLabel=s.top.length?label(s.top,' 하이브리드형'):'';
@@ -637,22 +633,24 @@ function update(){
   $('p4').textContent=s.top.length?'추천 준비됨':'-';
   document.querySelector('[data-tab=self]').classList.toggle('done',st.q.length>0);
   document.querySelector('[data-tab=skill]').classList.toggle('done',st.c.length>0);
+  document.querySelector('[data-tab=skill]').classList.toggle('locked',!okQ());
+  ['result','books'].forEach(k=>document.querySelector(`[data-tab=${k}]`).classList.toggle('locked',!(okQ()&&okC())));
 
   // STEP 1
   setBig($('selfType'),selfLabel,'문장을 고르면 결과가 나와요');
   $('selfDesc').innerHTML=typeDesc(s.top);
   $('selfNote').textContent=(!s.top.length?'':s.top.length===1?'가장 많이 고른 유형이 주 성향이에요.':'1위가 동점이라 두 성향 이상을 함께 가진 하이브리드형이에요.')+(s.top.length&&st.q.length<6?` 아직 ${st.q.length}개만 골라서 결과가 바뀔 수 있어요. 더 고를수록 정확해져요.`:'');
   $('selfRows').innerHTML=selfRows(s);
-  $('go2').setAttribute('aria-disabled',s.top.length?'false':'true');
-  $('sub1').textContent=!s.top.length?'문장을 하나 이상 고르면 결과를 볼 수 있어요.':`총 ${st.q.length}개를 선택했습니다. 더 선택할수록 결과는 정확해져요. 다 선택했다면 결과 보기를 눌러 주세요.`;
+  $('go2').setAttribute('aria-disabled',okQ()?'false':'true');
+  $('sub1').textContent=!okQ()?`최소 ${MIN}개 이상 선택해야 결과를 볼 수 있어요. (현재 ${st.q.length}개)`:`총 ${st.q.length}개를 선택했습니다. 더 선택할수록 결과는 정확해져요. 다 선택했다면 결과 보기를 눌러 주세요.`;
   $('next1').textContent=s.top.length?`내 성향은 ${selfLabel}이에요. 이제 지금까지의 업무 경험이 어떤 유형에 가까운지 확인해 볼까요?`:'STEP 1 성향 체크를 먼저 해 주세요.';
 
   // STEP 2
   gNames.forEach((_,i)=>$('gc'+i).textContent=`${k.cnt[i]}/${k.tot[i]}`);
   setBig($('skillType'),skillLabel,'경험한 일을 체크하면 결과가 나와요');
   $('skillRows').innerHTML=skillRows(k);
-  $('go3').setAttribute('aria-disabled',st.c.length?'false':'true');
-  $('sub2').textContent=!st.c.length?'경험한 일을 하나 이상 체크하면 결과를 볼 수 있어요.':`총 ${st.c.length}개를 선택했습니다. 더 선택할수록 결과는 정확해져요. 다 선택했다면 결과 보기를 눌러 주세요.`;
+  $('go3').setAttribute('aria-disabled',okC()?'false':'true');
+  $('sub2').textContent=!okC()?`최소 ${MIN}개 이상 선택해야 결과를 볼 수 있어요. (현재 ${st.c.length}개)`:`총 ${st.c.length}개를 선택했습니다. 더 선택할수록 결과는 정확해져요. 다 선택했다면 결과 보기를 눌러 주세요.`;
   $('next2').textContent=k.top.length?`경험상 강점은 ${skillLabel}이에요. 이제 성향과 경험을 함께 보고 내 강점을 확인해 볼까요?`:st.c.length?'공통 역량만 체크했어요. 유형별 항목도 체크하면 강점 유형이 나와요.':'STEP 2 역량 체크를 먼저 해 주세요.';
 
   // FINAL
@@ -687,6 +685,9 @@ update();
 const VIEWS=['self','self-result','skill','skill-result','books','result'];
 function route(){
   let v=location.hash.slice(1);if(!VIEWS.includes(v))v='self';
+  const needQ=['self-result','skill','skill-result','result','books'],needC=['skill-result','result','books'];
+  if(needQ.includes(v)&&!okQ())v='self';else if(needC.includes(v)&&!okC())v='skill';
+  if(location.hash.slice(1)!==v)history.replaceState(null,'','#'+v);
   document.querySelectorAll('[data-view]').forEach(sec=>sec.hidden=sec.dataset.view!==v);
   document.querySelector('.hero').hidden=v!=='self';
   const tab=v.replace('-result','');
